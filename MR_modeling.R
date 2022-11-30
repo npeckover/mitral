@@ -159,17 +159,20 @@ roc_logit <- roc(test$Severity3, logit_probs) # AUC: 0.6024
 roc_logit
 
 #### --- PR Curves ----####
-PRC <- as.data.frame(pr.curve(xgbT_preds, test$Severity3, curve = T)[["curve"]])
+correct <- ifelse(test$Severity3 == "NONEm", 0, 1)
+PRC <- as.data.frame(pr.curve(scores.class0 = xgbT_probs$MODs, 
+                              weights.class0 = correct, 
+                              curve = T)[["curve"]])
 
 ggplot(PRC) + 
-  geom_step(aes(x = V1, y = V2), color = "#77025e", size = 1) + 
+  geom_path(aes(x = V1, y = V2), color = "#77025e", size = 1) + 
   geom_abline(intercept = 0.068273, slope = 0, linetype = 2, alpha = 0.75) +
   theme_np() + 
   theme(panel.grid.major = element_blank(),
-                     axis.title = element_text()) +
+        axis.title = element_text()) +
   scale_y_continuous(limits = c(0,1)) + 
   scale_x_continuous(limits = c(0,1)) + 
-  labs(title = "PR Curve", subtitle = "Area Under the Curve = 0.543", y = "Precision", x = "Recall")
+  labs(title = "PR Curve", subtitle = "Area Under the Curve = 0.2485", y = "Precision", x = "Recall")
 
 ####--- examining final results ----####
 round(xgbT_probs[which(test$Severity3 == "MODs"), 2], 3)
