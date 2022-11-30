@@ -83,7 +83,7 @@ create_tiles2 <- function(x, var1, title) {
     count() %>%
     ggplot(aes(y = !!var1, x = Severity2, fill = n)) + 
     geom_tile(show.legend = F) +
-    geom_text(aes(label = n)) +
+    geom_text(aes(label = paste0(round((n/sum(n))*100, 1), '%'))) +
     scale_fill_gradient(low = "#f4ba55", high = "#bc2354") +
     theme_np() + 
     theme(panel.grid.major = element_blank()) +
