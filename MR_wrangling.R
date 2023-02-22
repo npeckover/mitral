@@ -93,10 +93,10 @@ DF <- DF %>%
   mutate(Severity2 = fct_collapse(Severity, 
                                   NONE = "NONE",
                                   MILD = "MILD",
-                                  "MODs" = c("MODERATE", "SEVERE")),
+                                  "MOD+" = c("MODERATE", "SEVERE")),
          Severity3 = fct_collapse(Severity, 
                                   "NONEm" = c("NONE", "MILD"),
-                                  "MODs" = c("MODERATE", "SEVERE")))
+                                  "MOD+" = c("MODERATE", "SEVERE")))
 
 # multiple blockages
 DF_2 <- DF %>%
